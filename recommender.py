@@ -105,6 +105,7 @@ class Recommender():
 		item_mat = np.random.rand(self.latent_features, self.n_items)
 
 		sse_accum = 0
+		self.list_sse = []
 
 		print("Iterations \t\t Mean Squared Error ")
 
@@ -136,7 +137,10 @@ class Recommender():
 								self.learning_rate * (2*diff*user_mat[i, k])
 							)
 
+
 			print(f"\t{iteration+1} \t\t {sse_accum/self.num_ratings} ")
+			
+			self.list_sse.append(sse_accum/self.num_ratings)
 
 		# Keep these matrices for later
 		self.user_mat = user_mat
@@ -184,7 +188,7 @@ class Recommender():
 
 
 	def make_recommendations(self, _id, dot_prod,
-							 _id_type='item', rec_num=5):
+							 _id_type='item', rec_num=5, window=3):
 		"""
 		This function make recommendations for a particular user or a
 		particular item regarding the value that you've putted in
@@ -261,7 +265,7 @@ class Recommender():
 					list(rf.find_similar_items(_id, 
 											   self.df_items,
 											   self.item_id_colname,
-											   dot_prod))[:rec_num]
+											   dot_prod, window))[:rec_num]
 				)
 
 				rec_names = rf.get_item_names(rec_ids,
