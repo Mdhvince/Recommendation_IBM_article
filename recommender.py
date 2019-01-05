@@ -112,7 +112,8 @@ class Recommender():
 		for iteration in range(self.iters):
 			old_sse = sse_accum
 			sse_accum = 0
-
+            
+            # for each user-item pairs
 			for i in range(self.n_users):
 				for j in range(self.n_items):
 
