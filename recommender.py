@@ -105,7 +105,6 @@ class Recommender():
 		item_mat = np.random.rand(self.latent_features, self.n_items)
 
 		sse_accum = 0
-		self.list_sse = []
 
 		print("Iterations \t\t Mean Squared Error ")
 
@@ -128,7 +127,8 @@ class Recommender():
 						# Keep track of the sum of squared errors for the 
 						# matrix
 						sse_accum += diff**2
-
+                        
+                        # Update U and V(t) matrix (Gradient Dscent)
 						for k in range(self.latent_features):
 							user_mat[i, k] += (
 								self.learning_rate * (2*diff*item_mat[k, j])
@@ -141,7 +141,6 @@ class Recommender():
 
 			print(f"\t{iteration+1} \t\t {sse_accum/self.num_ratings} ")
 			
-			self.list_sse.append(sse_accum/self.num_ratings)
 
 		# Keep these matrices for later
 		self.user_mat = user_mat
