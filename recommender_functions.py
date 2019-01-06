@@ -7,7 +7,9 @@ def find_similar_user(user_id, df_reviews, user_id_colname, dot_prod_user):
 	similar_id = np.where(dot_prod_user[user_idx] == np.max(dot_prod_user[user_idx]))[0]
 
 	similar_users = list(np.array(df_reviews.iloc[similar_id, ][user_id_colname]))
-	similar_users.remove(user_id)
+
+	if user_id in similar_users:
+		similar_users.remove(user_id)
     
 	return similar_users
 
