@@ -111,8 +111,7 @@ class Recommender():
 		for iteration in range(self.iters):
 			old_sse = sse_accum
 			sse_accum = 0
-            
-            # for each user-item pairs
+
 			for i in range(self.n_users):
 				for j in range(self.n_items):
 
@@ -127,8 +126,7 @@ class Recommender():
 						# Keep track of the sum of squared errors for the 
 						# matrix
 						sse_accum += diff**2
-                        
-                        # Update U and V(t) matrix (Gradient Dscent)
+
 						for k in range(self.latent_features):
 							user_mat[i, k] += (
 								self.learning_rate * (2*diff*item_mat[k, j])
@@ -138,9 +136,7 @@ class Recommender():
 								self.learning_rate * (2*diff*user_mat[i, k])
 							)
 
-
 			print(f"\t{iteration+1} \t\t {sse_accum/self.num_ratings} ")
-			
 
 		# Keep these matrices for later
 		self.user_mat = user_mat
@@ -187,8 +183,8 @@ class Recommender():
 			return None
 
 
-	def make_recommendations(self, _id, dot_prod,
-							 _id_type='item', rec_num=5, window=3):
+	def make_recommendations(self, _id, dot_prod, dot_prod_user,
+							 _id_type='item', rec_num=5, window=0):
 		"""
 		This function make recommendations for a particular user or a
 		particular item regarding the value that you've putted in
@@ -213,9 +209,21 @@ class Recommender():
 		- _id: either a user or item id (int)
 		- dot_prod: the dot product matrix computed by your own
 		to find similar items
+		- dot_prod_user: the dot product matrix computed by your own
+		to find similar users
 		- _id_type: either 'user' or 'item', Default:'item' (str)
 		- rec_num: number of recommendation that you want
 		Default:5 (int)
+		- window: When computing similarity with dot product of
+		matrices, a window of 0 means we want the most similar.
+		Sometimes, you can get only 1 similar, if you want more,
+		you can raise the window (we recommend no increase >3)
+		Default:0 (int)
+
+		Output:
+		- recommendation ids
+		- recommendation names
+		- and a personalized message
 		"""
 
 		if _id_type == 'user':
@@ -235,6 +243,17 @@ class Recommender():
 											  self.item_id_colname,
 											  self.item_name_colname)
 
+				rec_user_user_ids = rf.find_similar_user(_id,
+													  	 self.df_reviews,
+													  	 self.user_id_colname,
+													  	 dot_prod_user)
+
+				rec_user_item_names = rf.user_user_cf(rec_user_user_ids,
+													  self.user_item_df,
+													  self.df_reviews,
+													  self.item_id_colname,
+													  self.item_name_colname)
+
 			else:
 
 				message = "Hey, you are new here, this is for you:\n"
@@ -248,6 +267,10 @@ class Recommender():
 											  self.df_items,
 											  self.item_id_colname,
 											  self.item_name_colname)
+
+				rec_user_user_ids = None 
+				rec_user_item_names = None
+				
 		else:
 			if _id in self.items_ids_series:
 
@@ -271,15 +294,22 @@ class Recommender():
 				rec_names = rf.get_item_names(rec_ids,
 											  self.df_items,
 											  self.item_id_colname,
-											  self.item_name_colname) 
+											  self.item_name_colname)
+
+				rec_user_user_ids = None 
+				rec_user_item_names = None
+
 			else:
 				
 				message = (
 					"We can't make recommendation for this item, please make" 
 					"sure the data was updated with this item.\n"
 				)
+				rec_ids = None
+				rec_names = None
+				rec_user_user_ids = None 
+				rec_user_item_names = None
 
-				return None, None, message
 
-		return rec_ids, rec_names, message
+		return rec_ids, rec_names, message, rec_user_user_ids, rec_user_item_names
 
