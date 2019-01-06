@@ -66,7 +66,7 @@ def ranked_df(df_reviews, item_id_colname, rating_col_name, date_col_name):
 	R = df_reviews['mean_rate_article']
 	C = df_reviews[rating_col_name].mean()
 
-	df['rank_score'] = (v/(v+m) * R) + (m/(m+v) * C)
+	df_reviews['rank_score'] = (v/(v+m) * R) + (m/(m+v) * C)
 	
 	ranked_items = df_reviews.sort_values(by=['rank_score', date_col_name], ascending=False)
     
