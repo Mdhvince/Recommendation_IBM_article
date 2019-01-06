@@ -40,7 +40,7 @@ def user_user_cf(rec_user_user_ids, user_item_df, df_reviews, item_id_colname, i
 
 	for user_id in rec_user_user_ids:
 		for i in user_item_df.columns:
-			if user_item_df.iloc[user_id][i] == 1.0:
+			if user_item_df.iloc[user_id][i] > 0:
 				article_ids.append(i)
 
 	article_names = list(set(df_reviews[df_reviews[item_id_colname].isin(article_ids)][item_name_colname]))
