@@ -12,7 +12,8 @@ class Recommender():
     a Content Based Recommender.
     '''
 
-	def __init__(self, df_items, df_reviews, item_name_colname='item',
+	def __init__(self, df_items, df_reviews,
+                 based_similarity_col, item_name_colname='item',
 				 user_id_colname='user_id', item_id_colname='item_id',
 				 rating_col_name='rating', date_col_name='date'):
 		"""
@@ -32,6 +33,7 @@ class Recommender():
 		"""
 		self.df_items = df_items
 		self.df_reviews = df_reviews
+        self.based_similarity_col = based_similarity_col
 		self.item_name_colname = item_name_colname
 		self.user_id_colname = user_id_colname
 		self.item_id_colname = item_id_colname
@@ -285,11 +287,10 @@ class Recommender():
 					)
 
 				rec_ids = (
-					list(rf.find_similar_items(_id, 
-											   self.df_items,
-											   self.item_id_colname,
-											   dot_prod, window))[:rec_num]
-				)
+                    rf.find_similar_items(_id,
+                                          self.df_items,
+                                          self.item_id_colname,
+                                          self.based_similarity_col))[:rec_num]
 
 				rec_names = rf.get_item_names(rec_ids,
 											  self.df_items,
