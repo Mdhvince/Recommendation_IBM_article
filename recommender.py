@@ -33,7 +33,7 @@ class Recommender():
 		"""
 		self.df_items = df_items
 		self.df_reviews = df_reviews
-        self.based_similarity_col = based_similarity_col
+		self.based_similarity_col = based_similarity_col
 		self.item_name_colname = item_name_colname
 		self.user_id_colname = user_id_colname
 		self.item_id_colname = item_id_colname
@@ -185,8 +185,8 @@ class Recommender():
 			return None
 
 
-	def make_recommendations(self, _id, dot_prod, dot_prod_user,
-							 _id_type='item', rec_num=5, window=0):
+	def make_recommendations(self, _id, dot_prod_user,
+							 _id_type='item', rec_num=5):
 		"""
 		This function make recommendations for a particular user or a
 		particular item regarding the value that you've putted in
@@ -209,18 +209,11 @@ class Recommender():
 
 		Input:
 		- _id: either a user or item id (int)
-		- dot_prod: the dot product matrix computed by your own
-		to find similar items
 		- dot_prod_user: the dot product matrix computed by your own
 		to find similar users
 		- _id_type: either 'user' or 'item', Default:'item' (str)
 		- rec_num: number of recommendation that you want
 		Default:5 (int)
-		- window: When computing similarity with dot product of
-		matrices, a window of 0 means we want the most similar.
-		Sometimes, you can get only 1 similar, if you want more,
-		you can raise the window (we recommend no increase >3)
-		Default:0 (int)
 
 		Output:
 		- recommendation ids
@@ -287,10 +280,10 @@ class Recommender():
 					)
 
 				rec_ids = (
-                    rf.find_similar_items(_id,
-                                          self.df_items,
-                                          self.item_id_colname,
-                                          self.based_similarity_col))[:rec_num]
+					rf.find_similar_items(_id,
+										  self.df_items,
+										  self.item_id_colname,
+										  self.based_similarity_col))[:rec_num]
 
 				rec_names = rf.get_item_names(rec_ids,
 											  self.df_items,
