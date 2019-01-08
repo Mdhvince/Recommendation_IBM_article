@@ -13,7 +13,7 @@ class Recommender():
     '''
 
 	def __init__(self, df_items, df_reviews,
-                 based_similarity_col, item_name_colname='item',
+                 item_name_colname='item',
 				 user_id_colname='user_id', item_id_colname='item_id',
 				 rating_col_name='rating', date_col_name='date'):
 		"""
@@ -33,7 +33,6 @@ class Recommender():
 		"""
 		self.df_items = df_items
 		self.df_reviews = df_reviews
-		self.based_similarity_col = based_similarity_col
 		self.item_name_colname = item_name_colname
 		self.user_id_colname = user_id_colname
 		self.item_id_colname = item_id_colname
@@ -185,7 +184,7 @@ class Recommender():
 			return None
 
 
-	def make_recommendations(self, _id, dot_prod_user,
+	def make_recommendations(self, _id, dot_prod_user, tfidf_matrix,
 							 _id_type='item', rec_num=5):
 		"""
 		This function make recommendations for a particular user or a
@@ -283,7 +282,7 @@ class Recommender():
 					rf.find_similar_items(_id,
 										  self.df_items,
 										  self.item_id_colname,
-										  self.based_similarity_col))[:rec_num]
+                                          tfidf_matrix))[:rec_num]
 
 				rec_names = rf.get_item_names(rec_ids,
 											  self.df_items,

@@ -16,38 +16,34 @@ def find_similar_user(user_id, df_reviews, user_id_colname, dot_prod_user):
 	return similar_users
 
 
-def find_similar_items(item_id, df_items, item_id_colname, based_similarity_col):
+def find_similar_items(item_id, df_items, item_id_colname, tfidf_matrix):
+
+	# Compute the cosine similarity matrix
+	cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+	# Get the pairwsie similarity scores of all items with that item
+	indice_item = df_items[df_items[item_id_colname] == item_id].index[0]
+	sim_scores = list(enumerate(cosine_sim[indice_item]))
+
+	# Sort from highest to lowest
+	sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+	item_indices = [i[0] for i in sim_scores]
+
+	similar_item_ids = list(df_items[item_id_colname].iloc[item_indices])
     
-    tfidf = TfidfVectorizer(stop_words='english', ngram_range=(1, 2))
-    df_items[based_similarity_col] = df_items[based_similarity_col].fillna('')
-    tfidf_matrix = tfidf.fit_transform(df_items[based_similarity_col])
-
-    # Compute the cosine similarity matrix
-    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
-
-    # Get the pairwsie similarity scores of all items with that item
-    indice_item = df_items[df_items[item_id_colname] == item_id].index[0]
-    sim_scores = list(enumerate(cosine_sim[indice_item]))
-
-    # Sort from highest to lowest
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-
-    item_indices = [i[0] for i in sim_scores]
-
-    similar_item_ids = list(df_items[item_id_colname].iloc[item_indices])
-    
-    return similar_item_ids
+	return similar_item_ids
 
 
 def get_item_names(item_ids, df_items, item_id_colname, item_name_colname):
     
-    # ordered names
-    item_lst = []
-    for i in item_ids:
-        name = tuple(df_items[df_items[item_id_colname] == i][item_name_colname])[0]
-        item_lst.append(name)
+	# ordered names
+	item_lst = []
+	for i in item_ids:
+		name = tuple(df_items[df_items[item_id_colname] == i][item_name_colname])[0]
+		item_lst.append(name)
     
-    return item_lst
+	return item_lst
 
 
 def user_user_cf(rec_user_user_ids, user_item_df, df_reviews, item_id_colname, item_name_colname):
