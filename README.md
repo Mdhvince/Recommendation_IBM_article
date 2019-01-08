@@ -1,7 +1,13 @@
 
 # Recommendation engine for article on IBM Plateform
 
-Analyze the interactions that users have with articles on the IBM Watson Studio platform, and make recommendations to them about new articles you think they will like.
+Created an end-to-end recommendation system for recommending articles related to IBM Watson Studio. Used collaborative filtering techniques, content based, and matrix factorization techniques to make recommendations that are relevant for each individual user.
+
+## Method used
+- Matrix Factorization: Funk Singular Value Decomposition
+- Collaborative Filtering
+- Content Based
+- Ranked Based
 
 ## File Description
 - rec_eng_ibm.ipynb: data cleaning and nlp + recommendations
