@@ -126,6 +126,8 @@ class Recommender():
 
 			print(f"\t{iteration+1} \t\t {sse_accum/self.num_ratings} ")
 
+			self.mse=sse_accum/self.num_ratings
+
 		# Keep these matrices for later
 		self.user_mat = user_mat
 		self.item_mat = item_mat
