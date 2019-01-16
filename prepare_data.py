@@ -2,6 +2,15 @@ import pandas as pd
 import numpy as np 
 
 def clean_pipeline(df_reviews, df_items):
+    """
+    Inputs:
+    - df_reviews: dataframe with interaction of the user on an item
+    - df_items: dataframe all unique item
+
+    Outputs:
+    - df_reviews clean
+    - df_items clean
+    """
     
     df = df_reviews.copy()
     df_content = df_items.copy()
