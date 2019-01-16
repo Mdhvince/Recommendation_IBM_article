@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import recommender as r
-
+from sklearn.externals import joblib
 from prep_data_display import display_recommendations
 
 # Load all necessay datas
@@ -11,7 +11,6 @@ tfidf_matrix = np.load('saved_data/tfidf_matrix.npy')
 dot_product_matrix_user = np.load('saved_data/dot_product_matrix_user.npy')
 
 # Load rec object
-from sklearn.externals import joblib
 rec = joblib.load("saved_data/rec_sys.dat")
 
 
