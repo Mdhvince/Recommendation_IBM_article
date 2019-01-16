@@ -6,7 +6,7 @@ import recommender as r
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Prepare data
-from prepare_data import clean_pipeline, tokenize, create_user_item
+from prepare_data_functions import clean_pipeline, tokenize, create_user_item
 
 df = pd.read_csv('user-item-interactions.csv')
 df_content = pd.read_csv('articles_community.csv')
