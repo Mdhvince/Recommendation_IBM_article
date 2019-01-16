@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import recommender as r
 
+from prep_data_display import *
+
 # Load all necessay datas
 df = pd.read_csv('df_clean.csv').iloc[:,1:]
 df_content = pd.read_csv('df_content_clean.csv').iloc[:,1:]
