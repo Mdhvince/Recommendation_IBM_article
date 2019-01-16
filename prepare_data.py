@@ -3,6 +3,7 @@ import numpy as np
 
 import re
 import nltk
+from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import stopwords
 #nltk.download('punkt')
 #nltk.download('stopwords')
