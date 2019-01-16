@@ -79,3 +79,29 @@ def clean_pipeline(df_reviews, df_items):
     df['date'] = 0
     
     return df, df_content
+
+
+
+
+
+def tokenize(text):
+    """
+    This function do the following steps:
+    - Normalize, remove ponctuations
+    - Tokenize the input (str)
+    - Remove english stopwords
+    - Lemmatize but keep the gramatical sense of the word
+    - Clean White spaces
+
+    Input:
+    - text: a (str) value
+
+    Output:
+    - token of clean text
+    """
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
+    words = word_tokenize(text)
+    words = [w for w in words if w not in stopwords.words("english")]
+    lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in words]
+    words_clean = [word.strip() for word in words]
+    return words_clean
