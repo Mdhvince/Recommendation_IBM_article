@@ -117,7 +117,7 @@ def tokenize(text):
 
 
 
-def create_user_item():
+def create_user_item(df):
     """
     Output:
     - dataframe of user by item
