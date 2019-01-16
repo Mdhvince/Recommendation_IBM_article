@@ -3,14 +3,14 @@ import numpy as np
 import recommender as r
 
 # Nlp
-import re
-import nltk
-from nltk.corpus import stopwords
-#nltk.download('punkt')
-#nltk.download('stopwords')
-#nltk.download('wordnet')
-from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.stem.wordnet import WordNetLemmatizer
 
+# Prepare data
+from prepare_data import clean_pipeline
+
+df = pd.read_csv('user-item-interactions.csv')
+df_content = pd.read_csv('articles_community.csv')
+
 # Cleanning Pipeline
+df, df_content = clean_pipeline(df_reviews=df, df_items=df_content)

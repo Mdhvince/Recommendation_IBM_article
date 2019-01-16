@@ -1,5 +1,13 @@
 import pandas as pd 
-import numpy as np 
+import numpy as np
+
+import re
+import nltk
+from nltk.corpus import stopwords
+#nltk.download('punkt')
+#nltk.download('stopwords')
+#nltk.download('wordnet')
+from nltk.tokenize import word_tokenize
 
 def clean_pipeline(df_reviews, df_items):
     """
