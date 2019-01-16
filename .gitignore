@@ -1,2 +1,2 @@
 *.dat
-*.npy
+/saved_data

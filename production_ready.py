@@ -5,14 +5,14 @@ import recommender as r
 from prep_data_display import display_recommendations
 
 # Load all necessay datas
-df = pd.read_csv('df_clean.csv').iloc[:,1:]
-df_content = pd.read_csv('df_content_clean.csv').iloc[:,1:]
-tfidf_matrix = np.load('tfidf_matrix.npy')
-dot_product_matrix_user = np.load('dot_product_matrix_user.npy')
+df = pd.read_csv('saved_data/df_clean.csv').iloc[:,1:]
+df_content = pd.read_csv('saved_data/df_content_clean.csv').iloc[:,1:]
+tfidf_matrix = np.load('saved_data/tfidf_matrix.npy')
+dot_product_matrix_user = np.load('saved_data/dot_product_matrix_user.npy')
 
 # Load rec object
 from sklearn.externals import joblib
-rec = joblib.load("rec_sys.dat")
+rec = joblib.load("saved_data/rec_sys.dat")
 
 
 # make recommendations
