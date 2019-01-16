@@ -105,3 +105,21 @@ def tokenize(text):
     lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in words]
     words_clean = [word.strip() for word in words]
     return words_clean
+
+
+
+def create_user_item():
+    """
+    Output:
+    - dataframe of user by item
+    """
+    user_item = df[['user_id',
+                    'article_id',
+                    'nb_interactions_user_article']]
+    
+    user_item_df=(
+        user_item.groupby(['user_id',
+                           'article_id'])['nb_interactions_user_article'].max().unstack()
+    )
+    
+    return user_item_df
