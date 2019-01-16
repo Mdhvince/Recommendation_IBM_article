@@ -14,6 +14,7 @@ Created an end-to-end recommendation system for recommending articles related to
 - user-item-interactions.csv: interactions of users on articles
 - articles_community: all articles + descriptions on ibm plateform
 - recommender_finctions.py / recommender.py: My own Recommender module, see more <a href='https://github.com/Mdhvince/Recommendation_engine_module'> here </a>
+- prep_data_display.py / production_ready.py : File with code ready for production
 
 ## Authors
 Medhy Vinceslas
